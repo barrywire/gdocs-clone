@@ -1,9 +1,12 @@
-import Docs from './components/docs'
+import Docs from './components/docs';
+
+// Firebase imports
+import { app, database } from './firebaseConfig';
 
 function App()
 {
   return (
-    <Docs />
+    <Docs database={database} />
   );
 }
 

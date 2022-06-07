@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
@@ -15,7 +14,7 @@ const style = {
     p: 2,
 };
 
-export default function CreateModal({ open, setOpen })
+export default function CreateModal({ open, setOpen, title, setTitle, addData })
 {
     const handleClose = () => setOpen(false);
 
@@ -25,7 +24,6 @@ export default function CreateModal({ open, setOpen })
                 open={open}
                 onClose={handleClose}
                 aria-labelledby='modal-modal-title'
-                aria-describedby='modal-modal-description'
             >
                 <Box sx={style}>
                     <Typography id='modal-modal-title' variant='h6' component='h2'>
@@ -33,12 +31,18 @@ export default function CreateModal({ open, setOpen })
                     </Typography>
 
                     <div className='form-floating mb-3'>
-                        <input placeholder='Add a Title' id='title' className='my-2 form-control' />
+                        <input
+                            placeholder='Add a Title' 
+                            id='title' 
+                            className='my-2 form-control'
+                            onChange={(event) => setTitle(event.target.value)}
+                            value={title}
+                            />
                         <label for='title'>Title</label>
                     </div>
 
                     <center>
-                        <button className='btn btn-sm btn-primary'>
+                        <button className='btn btn-sm btn-primary' onClick={addData}>
                             Create Document
                         </button>
                     </center>
