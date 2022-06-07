@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Component import
 import CreateModal from './modal';
 
-// Firebase component imports
-import { addDoc, collection } from 'firebase/firestore';
+// Firebase function imports
+import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+
+// MUI Component Imports
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
 
 export default function Docs({ database })
 {
@@ -18,29 +24,65 @@ export default function Docs({ database })
 
     const collectionRef = collection(database, 'docsData')
 
-    // Function that will trigger the add data function
-    const addData = () => {
+    // Define the array state that will hold the returned data
+    const [docsData, setDocsData] = useState([]);
+
+
+    // Function that will add data to the database
+    const addData = () =>
+    {
         addDoc(collectionRef, {
             title: title
         })
-        .then(() => {
-            alert('Data added')
-            handleClose()
-        })
-        .catch(() => {
-            alert('Cannot add data')
+            .then(() =>
+            {
+                alert('Data added')
+                handleClose()
+            })
+            .catch(() =>
+            {
+                alert('Cannot add data')
+            })
+    }
+
+    // Function that will get data from the database
+    const getData = () =>
+    {
+        onSnapshot(collectionRef, (data) =>
+        {
+            setDocsData(data.docs.map((doc) =>
+            {
+                return { ...doc.data(), id: doc.id }
+            }))
         })
     }
 
-    return (
-        <main className='p-2'>
-            <div className='text-center'>
-                <h1 className='inter-sbold'>Docs Clone</h1>
-            </div>
+    // Remedy to concurrent rendering
+    const isMounted = useRef()
 
-            <button className='btn btn-sm btn-primary' onClick={handleOpen}>
-                Create a document
-            </button>
+    useEffect(() =>
+    {
+        if (isMounted.current)
+        {
+            return
+        }
+        isMounted.current = true;
+        getData()
+    }, [])
+
+    return (
+        <div className='container p-3'>
+            <div className='row'>
+                <div className='col text-center'>
+                    <h2 className='inter-sbold'>Docs Clone</h2>
+                </div>
+
+                <div className='col'>
+                    <button className='btn btn-sm btn-primary' onClick={handleOpen}>
+                        Create a document
+                    </button>
+                </div>
+            </div>
 
             <CreateModal
                 open={open}
@@ -50,6 +92,29 @@ export default function Docs({ database })
                 addData={addData}
             />
 
-        </main>
+            <div className='container p-4'>
+                <div className='row'>
+                    {docsData.map((doc) =>
+                    {
+                        return (
+                            <div className='col-lg-3 col-md-6 col-sm-12 mb-3'>
+                                <Card variant='outlined'>
+                                    <CardContent>
+                                        <Typography variant='h5'>
+                                            {doc.title}
+                                        </Typography>
+                                        <Typography variant='body2'>
+                                            {doc.title}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        )
+                    })
+                    }
+                </div>
+            </div>
+
+        </div>
     )
 }
