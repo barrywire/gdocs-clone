@@ -9,3 +9,4 @@ This is a minimalist clone of the Google Docs service. Once development is compl
 3. [Firebase](https://firebase.google.com/)
 4. [Google Cloud Platform](https://cloud.google.com/)
 5. [MaterialUI](https://material-ui.com/)
+6. [Bootstrap](https://getbootstrap.com/)
