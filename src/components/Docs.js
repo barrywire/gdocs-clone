@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Component import
-import CreateModal from './modal';
+import CreateModal from './Modal';
 
 // Firebase function imports
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';

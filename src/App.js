@@ -1,4 +1,4 @@
-import Docs from './components/docs';
+import Docs from './components/Docs';
 
 // Firebase imports
 import { app, database } from './firebaseConfig';
