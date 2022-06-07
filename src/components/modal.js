@@ -39,7 +39,7 @@ export default function CreateModal({ open, setOpen })
 
                     <center>
                         <button className='btn btn-sm btn-primary'>
-                            Create
+                            Create Document
                         </button>
                     </center>
                 </Box>
