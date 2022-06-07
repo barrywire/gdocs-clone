@@ -70,6 +70,10 @@ export default function Docs({ database })
         getData()
     }, [])
 
+    const getID = (id) => {
+        console.log(id)
+    }
+
     return (
         <div className='container p-3'>
             <div className='row'>
@@ -97,8 +101,8 @@ export default function Docs({ database })
                     {docsData.map((doc) =>
                     {
                         return (
-                            <div className='col-lg-3 col-md-6 col-sm-12 mb-3'>
-                                <Card variant='outlined'>
+                            <div className='col-lg-3 col-md-6 col-sm-12 mb-3' key={doc.id}>
+                                <Card variant='outlined' onClick={() => getID(doc.id)}>
                                     <CardContent>
                                         <Typography variant='h5'>
                                             {doc.title}
